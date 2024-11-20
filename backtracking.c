@@ -8,7 +8,9 @@
 
 #define SHOW_EXECUTION 0
 
-const char *colors[] = {"Red", "Yellow", "Blue", "Green"};
+int iter;
+
+const char *colors[] = {"R", "Y", "B", "G"};
 
 int** createGraph(int size);
 void printGraph(int** graph, int size);
@@ -28,14 +30,22 @@ int main(){
     int start_node = rand() % NODES;
     printf("Start node: %d\n", start_node);
 
+    iter = 0;
     if (backtracking(state, start_node, graph)){
         printf("Graph colouring is successful:\n");
         for (int i = 0; i < NODES; i++) {
-            printf("Node %d: color %s\n", i + 1, colors[state[i]]);
+            printf("%s ", colors[state[i]]);
         }
     } else{
         printf("Error: Unable to color the graph with %d colors.\n", COLORS);
     }
+
+    for (int i = 0; i < NODES; i++) {
+        free(graph[i]);
+    }
+    free(graph);
+
+    printf("\n%d", iter);
 
     return 0;
 }
@@ -75,6 +85,7 @@ void printGraph(int** graph, int size){
 }
 
 int backtracking(int state[], int current_node, int** graph){
+    iter++;
     if (SHOW_EXECUTION){
         printf("Current node = %d\n", current_node);
     }
