@@ -4,7 +4,7 @@
 #include <string.h>
 
 #define NODES 47
-#define SHOW_EXECUTION 0
+#define SHOW_EXECUTION 1
 
 const char *colors[] = {"R", "Y", "B", "G"};
 

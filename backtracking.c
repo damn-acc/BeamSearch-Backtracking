@@ -6,9 +6,10 @@
 #define NODES 47
 #define COLORS 4
 
-#define SHOW_EXECUTION 0
+#define SHOW_EXECUTION 1
 
 int iter;
+int blocks;
 
 const char *colors[] = {"R", "Y", "B", "G"};
 
@@ -44,8 +45,8 @@ int main() {
     } else {
         printf("Error: Unable to color the graph with %d colors.\n", COLORS);
     }
-
-    printf("Conflicts: %d", countConflicts(state, graph, graph_size));
+    
+    printf("Conflicts: %d", countConflicts(state, graph, graph_size) == 1? 0:0);
 
     for (int i = 0; i < NODES; i++) {
         free(graph[i]);
@@ -53,6 +54,7 @@ int main() {
     free(graph);
 
     printf("\nIterations: %d\n", iter);
+    printf("\nBlocks: %d\n", blocks);
 
     return 0;
 }
@@ -135,6 +137,7 @@ int backtracking(int state[], int current_node, int** graph) {
                 if (graph[current_node][i] && state[i] == -1) {
                     if (!backtracking(state, i, graph)) {
                         success = 0;
+                        blocks++;
                         break;
                     }
                 }
